@@ -3,6 +3,7 @@ package lotto.domain;
 import lotto.util.LottoNumberGenerator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ public class Lottos {
             lottos.add(lotto);
         }
         return new Lottos(lottos);
+    }
+
+    public List<Lotto> getLottos() {
+        return Collections.unmodifiableList(lottos);
     }
 
     public int size() {

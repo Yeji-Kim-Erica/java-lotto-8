@@ -1,6 +1,7 @@
 package lotto.controller;
 
 import lotto.domain.DepositAmount;
+import lotto.domain.Lottos;
 import lotto.service.PurchaseService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
@@ -21,7 +22,7 @@ public class LottoController {
 
     public void run() {
         DepositAmount depositAmount = makeDeposit();
-        purchaseService.purchaseLottos(depositAmount);
+        Lottos lottos = buyLottos(depositAmount);
     }
 
     private DepositAmount makeDeposit() {
@@ -38,5 +39,11 @@ public class LottoController {
         outputView.printDepositPrompt();
         String depositAmount = inputView.readDepositAmount();
         return purchaseService.depositMoney(depositAmount);
+    }
+
+    private Lottos buyLottos(DepositAmount depositAmount) {
+        Lottos lottos = purchaseService.purchaseLottos(depositAmount);
+        outputView.printLottoIssuanceDetails(lottos);
+        return lottos;
     }
 }
