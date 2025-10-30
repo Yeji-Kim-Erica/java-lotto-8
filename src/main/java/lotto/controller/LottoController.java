@@ -21,6 +21,7 @@ public class LottoController {
 
     public void run() {
         DepositAmount depositAmount = makeDeposit();
+        purchaseService.purchaseLottos(depositAmount);
     }
 
     private DepositAmount makeDeposit() {

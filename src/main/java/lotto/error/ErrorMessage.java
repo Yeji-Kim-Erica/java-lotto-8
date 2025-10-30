@@ -11,7 +11,12 @@ public enum ErrorMessage {
     // DepositAmount Error
     AMOUNT_LESS_THAN_MINIMUM("구입 금액은 1,000원 이상이어야 합니다."),
     AMOUNT_OVER_MAXIMUM("최대 입금 가능 금액은 2,147,483,000원입니다."),
-    AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE("구입 금액은 1,000원 단위여야 합니다.");
+    AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE("구입 금액은 1,000원 단위여야 합니다."),
+
+    // Lotto Error
+    LOTTO_SIZE_INVALID("로또 번호는 6개여야 합니다."),
+    LOTTO_NUMBER_OUT_OF_RANGE("로또 번호는 1부터 45 사이의 숫자여야 합니다."),
+    LOTTO_NUMBER_DUPLICATED("로또 번호는 중복될 수 없습니다.");
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 
