@@ -2,6 +2,8 @@ package lotto.controller;
 
 import lotto.domain.DepositAmount;
 import lotto.domain.Lottos;
+import lotto.domain.WinningNumbers;
+import lotto.service.DrawService;
 import lotto.service.PurchaseService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
@@ -10,19 +12,18 @@ import lotto.view.OutputView;
  * 로또 발매기 프로그램의 전체 흐름을 담당하는 클래스
  */
 public class LottoController {
-    private final InputView inputView;
-    private final OutputView outputView;
     private final PurchaseService purchaseService;
+    private final DrawService drawService;
 
-    public LottoController(InputView inputView, OutputView outputView, PurchaseService purchaseService) {
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public LottoController(PurchaseService purchaseService, DrawService drawService) {
         this.purchaseService = purchaseService;
+        this.drawService = drawService;
     }
 
     public void run() {
         DepositAmount depositAmount = makeDeposit();
         Lottos lottos = buyLottos(depositAmount);
+        WinningNumbers winningNumbers = drawWinningNumbers();
     }
 
     private DepositAmount makeDeposit() {
@@ -30,20 +31,36 @@ public class LottoController {
             try {
                 return attemptDeposit();
             } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e);
+                OutputView.printErrorMessage(e);
             }
         }
     }
 
     private DepositAmount attemptDeposit() {
-        outputView.printDepositPrompt();
-        String depositAmount = inputView.readDepositAmount();
+        OutputView.printDepositPrompt();
+        String depositAmount = InputView.readDepositAmount();
         return purchaseService.depositMoney(depositAmount);
     }
 
     private Lottos buyLottos(DepositAmount depositAmount) {
         Lottos lottos = purchaseService.purchaseLottos(depositAmount);
-        outputView.printLottoIssuanceDetails(lottos);
+        OutputView.printLottoIssuanceDetails(lottos);
         return lottos;
+    }
+
+    private WinningNumbers drawWinningNumbers() {
+        while (true) {
+            try {
+                return attemptSelectingWinningNumbers();
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e);
+            }
+        }
+    }
+
+    private WinningNumbers attemptSelectingWinningNumbers() {
+        OutputView.printWinningNumberPrompt();
+        String winningNumbers = InputView.readWinningNumbers();
+        return drawService.determineWinningNumbers(winningNumbers);
     }
 }

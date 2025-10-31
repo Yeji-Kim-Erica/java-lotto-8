@@ -1,0 +1,66 @@
+package lotto.domain;
+
+import lotto.error.*;
+import lotto.util.InputParser;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * 당첨 번호 도메인 클래스
+ */
+public class WinningNumbers extends LotteryNumbers {
+    private static final String DELIMITER = ",";
+
+    private WinningNumbers(List<Integer> numbers) {
+        super(numbers);
+    }
+
+    public static WinningNumbers from(String winningNumbers) {
+        List<Integer> parsedNumbers = parseIntegers(winningNumbers);
+        return validate(parsedNumbers);
+    }
+
+    public List<Integer> getNumbers() {
+        return Collections.unmodifiableList(numbers);
+    }
+
+    private static List<Integer> parseIntegers(String input) {
+        try {
+            List<String> numbersString = split(input);
+            return convertToInt(numbersString);
+        } catch (InputNullOrBlankException e) {
+            throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_NULL_OR_BLANK.getMessage());
+        } catch (InputNotNumericException e) {
+            throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_NOT_NUMERIC.getMessage());
+        } catch (InputNumberOverflowException e) {
+            throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_OUT_OF_RANGE.getMessage());
+        }
+    }
+
+    private static List<String> split(String input) {
+        String refinedInput = InputParser.refineInput(input);
+        return Arrays.stream(refinedInput.split(DELIMITER)).toList();
+    }
+
+    private static List<Integer> convertToInt(List<String> inputStrings) {
+        return inputStrings.stream()
+                .map(InputParser::refineInput)
+                .map(InputParser::parseToInt)
+                .toList();
+    }
+
+    private static WinningNumbers validate(List<Integer> winningNumbers) {
+        try {
+            return new WinningNumbers(winningNumbers);
+        } catch (InvalidLottoSizeException e) {
+            throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_SIZE_INVALID.getMessage());
+        } catch (LottoNumberOutOfRangeException e) {
+            throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_OUT_OF_RANGE.getMessage());
+        } catch (DuplicateLottoNumberException e) {
+            throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_DUPLICATED.getMessage());
+        }
+    }
+
+}

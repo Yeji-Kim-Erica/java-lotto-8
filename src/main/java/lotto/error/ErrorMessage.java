@@ -14,7 +14,14 @@ public enum ErrorMessage {
     // Lotto Error
     LOTTO_SIZE_INVALID("로또 번호는 6개여야 합니다."),
     LOTTO_NUMBER_OUT_OF_RANGE("로또 번호는 1부터 45 사이의 숫자여야 합니다."),
-    LOTTO_NUMBER_DUPLICATED("로또 번호는 중복될 수 없습니다.");
+    LOTTO_NUMBER_DUPLICATED("로또 번호는 중복될 수 없습니다."),
+
+    // WinningNumbers Error
+    WINNING_NUMBERS_NULL_OR_BLANK("당첨 번호는 공백이거나 비어 있을 수 없습니다."),
+    WINNING_NUMBERS_NOT_NUMERIC("당첨 번호는 숫자여야 합니다."),
+    WINNING_NUMBERS_OUT_OF_RANGE("당첨 번호는 1부터 45 사이의 숫자여야 합니다."),
+    WINNING_NUMBERS_SIZE_INVALID("당첨 번호는 6개여야 합니다."),
+    WINNING_NUMBERS_DUPLICATED("당첨 번호는 중복될 수 없습니다.");
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 
