@@ -4,6 +4,8 @@ import lotto.error.InputNotNumericException;
 import lotto.error.InputNullOrBlankException;
 import lotto.error.InputNumberOverflowException;
 
+import java.math.BigInteger;
+
 /**
  * 사용자 입력을 변환, 검증하는 유틸리티 클래스
  */
@@ -29,7 +31,7 @@ public final class InputParser {
 
     private static void distinguishNumberFormatError(String input) {
         try {
-            Long.parseLong(input);
+            new BigInteger(input);
         } catch (NumberFormatException e) {
             throw new InputNotNumericException();
         }

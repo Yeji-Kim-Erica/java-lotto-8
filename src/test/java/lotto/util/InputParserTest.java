@@ -58,7 +58,7 @@ public class InputParserTest {
 
         @DisplayName("Integer의 범위를 초과하는 문자열을 입력받을 경우 예외가 발생한다.")
         @ParameterizedTest
-        @ValueSource(strings = {"99999999999999", Integer.MAX_VALUE + 1L + ""})
+        @ValueSource(strings = {"999999999999999999999999999999", Integer.MAX_VALUE + 1L + ""})
         void should_ThrowException_When_IntegerOverflow(String input) {
             // when & then
             assertThatThrownBy(() -> InputParser.parseToInt(input))
