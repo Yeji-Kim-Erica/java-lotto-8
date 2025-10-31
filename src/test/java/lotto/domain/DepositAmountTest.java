@@ -31,7 +31,7 @@ public class DepositAmountTest {
 
     @Nested
     class ExceptionTest {
-        @DisplayName("입력 값이 존재하지 않는 경우 예외가 발생한다.")
+        @DisplayName("입력값이 존재하지 않는 경우 예외가 발생한다.")
         @ParameterizedTest
         @EmptySource
         @NullSource
