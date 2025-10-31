@@ -9,7 +9,7 @@ import lotto.util.RandomLottoNumberGenerator;
  */
 public class PurchaseService {
     public DepositAmount depositMoney(String amount) {
-        return DepositAmount.parse(amount);
+        return DepositAmount.from(amount);
     }
 
     public Lottos purchaseLottos(DepositAmount depositAmount) {

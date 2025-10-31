@@ -4,14 +4,12 @@ package lotto.error;
  * 오류 메시지를 정의한 클래스
  */
 public enum ErrorMessage {
-    // Common Error
-    INPUT_NULL_OR_BLANK("입력값은 공백이거나 비어 있을 수 없습니다."),
-    INPUT_NOT_CONVERTIBLE_TO_NUMERIC("입력값은 숫자여야 합니다."),
-
     // DepositAmount Error
-    AMOUNT_LESS_THAN_MINIMUM("구입 금액은 1,000원 이상이어야 합니다."),
-    AMOUNT_OVER_MAXIMUM("최대 입금 가능 금액은 2,147,483,000원입니다."),
-    AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE("구입 금액은 1,000원 단위여야 합니다."),
+    DEPOSIT_AMOUNT_NULL_OR_BLANK("구입 금액은 공백이거나 비어 있을 수 없습니다."),
+    DEPOSIT_AMOUNT_NOT_NUMERIC("구입 금액은 숫자여야 합니다."),
+    DEPOSIT_AMOUNT_LESS_THAN_MINIMUM("구입 금액은 1,000원 이상이어야 합니다."),
+    DEPOSIT_AMOUNT_OVER_MAXIMUM("최대 입금 가능 금액은 2,147,483,000원입니다."),
+    DEPOSIT_AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE("구입 금액은 1,000원 단위여야 합니다."),
 
     // Lotto Error
     LOTTO_SIZE_INVALID("로또 번호는 6개여야 합니다."),

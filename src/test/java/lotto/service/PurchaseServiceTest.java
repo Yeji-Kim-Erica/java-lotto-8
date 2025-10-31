@@ -16,8 +16,6 @@ public class PurchaseServiceTest {
         purchaseService = new PurchaseService();
     }
 
-
-
     @Nested
     class ExceptionTest {
         @DisplayName("입금 과정에서 예외가 발생한 경우 예외가 발생한다.")

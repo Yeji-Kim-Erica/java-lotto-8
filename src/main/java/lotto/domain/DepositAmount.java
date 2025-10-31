@@ -1,6 +1,10 @@
 package lotto.domain;
 
 import lotto.error.ErrorMessage;
+import lotto.error.InputNotNumericException;
+import lotto.error.InputNullOrBlankException;
+import lotto.error.InputNumberOverflowException;
+import lotto.util.InputParser;
 
 /**
  * 구입금액 도메인 클래스
@@ -17,9 +21,8 @@ public class DepositAmount {
 
     }
 
-    public static DepositAmount parse(String depositAmount) {
-        String refinedAmount = refineInput(depositAmount);
-        int parsedAmount = parseToInt(refinedAmount);
+    public static DepositAmount from(String depositAmount) {
+        int parsedAmount = parse(depositAmount);
         return new DepositAmount(parsedAmount);
     }
 
@@ -34,42 +37,30 @@ public class DepositAmount {
     private void validateDepositRule(int amount) {
         boolean isLessThanMinimum = amount < LOTTO_PRICE;
         if (isLessThanMinimum) {
-            throw new IllegalArgumentException(ErrorMessage.AMOUNT_LESS_THAN_MINIMUM.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_LESS_THAN_MINIMUM.getMessage());
         }
 
         boolean isOverMaximum = amount > MAXIMUM_AMOUNT;
         if (isOverMaximum) {
-            throw new IllegalArgumentException(ErrorMessage.AMOUNT_OVER_MAXIMUM.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_OVER_MAXIMUM.getMessage());
         }
 
         boolean isNotDivisibleByLottoPrice = (amount % LOTTO_PRICE != 0);
         if (isNotDivisibleByLottoPrice) {
-            throw new IllegalArgumentException(ErrorMessage.AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE.getMessage());
         }
     }
 
-    private static String refineInput(String input) {
-        boolean isNullOrBlank = (input == null) || input.isBlank();
-        if (isNullOrBlank) {
-            throw new IllegalArgumentException(ErrorMessage.INPUT_NULL_OR_BLANK.getMessage());
-        }
-        return input.trim();
-    }
-
-    private static int parseToInt(String input) {
+    private static int parse(String input) {
         try {
-            return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            distinguishNumberFormatError(input);
-            throw new IllegalArgumentException(ErrorMessage.AMOUNT_OVER_MAXIMUM.getMessage());
-        }
-    }
-
-    private static void distinguishNumberFormatError(String input) {
-        try {
-            Long.parseLong(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.INPUT_NOT_CONVERTIBLE_TO_NUMERIC.getMessage());
+            String refinedInput = InputParser.refineInput(input);
+            return InputParser.parseToInt(refinedInput);
+        } catch (InputNullOrBlankException e) {
+            throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_NULL_OR_BLANK.getMessage());
+        } catch (InputNotNumericException e) {
+            throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_NOT_NUMERIC.getMessage());
+        } catch (InputNumberOverflowException e) {
+            throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_OVER_MAXIMUM.getMessage());
         }
     }
 }

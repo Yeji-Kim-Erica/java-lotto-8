@@ -21,7 +21,7 @@ public class DepositAmountTest {
         @CsvSource(value = {"1000,1", "5000,5", "10000,10"})
         void should_ReturnNumberOfAffordableLotto(String input, int expected) {
             // when
-            DepositAmount depositAmount = DepositAmount.parse(input);
+            DepositAmount depositAmount = DepositAmount.from(input);
             int numberOfPurchasableLotto = depositAmount.getNumberOfPurchasableLotto();
 
             // then
@@ -38,9 +38,9 @@ public class DepositAmountTest {
         @ValueSource(strings = {"  ", ""})
         void should_ThrowException_ForNullOrBlank(String input) {
             // when & then
-            assertThatThrownBy(() -> DepositAmount.parse(input))
+            assertThatThrownBy(() -> DepositAmount.from(input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.INPUT_NULL_OR_BLANK.getMessage());
+                    .hasMessageContaining(ErrorMessage.DEPOSIT_AMOUNT_NULL_OR_BLANK.getMessage());
         }
 
         @DisplayName("입력값을 숫자로 변환 불가한 경우 예외가 발생한다.")
@@ -48,9 +48,9 @@ public class DepositAmountTest {
         @ValueSource(strings = {"3천원", "3k", "$1000", "3,000", "3000.00", "3 000"})
         void should_ThrowException_When_NotConvertibleToNumeric(String input) {
             // when & then
-            assertThatThrownBy(() -> DepositAmount.parse(input))
+            assertThatThrownBy(() -> DepositAmount.from(input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.INPUT_NOT_CONVERTIBLE_TO_NUMERIC.getMessage());
+                    .hasMessageContaining(ErrorMessage.DEPOSIT_AMOUNT_NOT_NUMERIC.getMessage());
         }
 
         @DisplayName("최소 입금 금액(로또 1장의 가격)보다 적은 경우 예외가 발생한다.")
@@ -58,9 +58,9 @@ public class DepositAmountTest {
         @ValueSource(strings = {"-1000", "0", "500"})
         void should_ThrowException_When_LessThanMinimum(String input) {
             // when & then
-            assertThatThrownBy(() -> DepositAmount.parse(input))
+            assertThatThrownBy(() -> DepositAmount.from(input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.AMOUNT_LESS_THAN_MINIMUM.getMessage());
+                    .hasMessageContaining(ErrorMessage.DEPOSIT_AMOUNT_LESS_THAN_MINIMUM.getMessage());
         }
 
         @DisplayName("로또 가격으로 나누어 떨어지지 않는 경우 예외가 발생한다.")
@@ -70,9 +70,9 @@ public class DepositAmountTest {
             String input = "5500";
 
             // when & then
-            assertThatThrownBy(() -> DepositAmount.parse(input))
+            assertThatThrownBy(() -> DepositAmount.from(input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE.getMessage());
+                    .hasMessageContaining(ErrorMessage.DEPOSIT_AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE.getMessage());
         }
 
         @DisplayName("최대 입금 가능 금액을 초과한 경우 예외가 발생한다.")
@@ -80,9 +80,9 @@ public class DepositAmountTest {
         @ValueSource(strings = {Integer.MAX_VALUE + "", "999999999999999999"})
         void should_ThrowException_When_TooLarge(String input) {
             // when & then
-            assertThatThrownBy(() -> DepositAmount.parse(input))
+            assertThatThrownBy(() -> DepositAmount.from(input))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.AMOUNT_OVER_MAXIMUM.getMessage());
+                    .hasMessageContaining(ErrorMessage.DEPOSIT_AMOUNT_OVER_MAXIMUM.getMessage());
         }
     }
 }
