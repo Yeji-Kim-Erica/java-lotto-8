@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.domain.BonusNumber;
 import lotto.domain.DepositAmount;
 import lotto.domain.Lottos;
 import lotto.domain.WinningNumbers;
@@ -24,6 +25,7 @@ public class LottoController {
         DepositAmount depositAmount = makeDeposit();
         Lottos lottos = buyLottos(depositAmount);
         WinningNumbers winningNumbers = drawWinningNumbers();
+        BonusNumber bonusNumber = drawBonusNumber(winningNumbers);
     }
 
     private DepositAmount makeDeposit() {
@@ -62,5 +64,22 @@ public class LottoController {
         OutputView.printWinningNumberPrompt();
         String winningNumbers = InputView.readWinningNumbers();
         return drawService.determineWinningNumbers(winningNumbers);
+    }
+
+    private BonusNumber drawBonusNumber(WinningNumbers winningNumbers) {
+        OutputView.printBlankLine();
+        while (true) {
+            try {
+                return attemptSelectingBonusNumber(winningNumbers);
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e);
+            }
+        }
+    }
+
+    private BonusNumber attemptSelectingBonusNumber(WinningNumbers winningNumbers) {
+        OutputView.printBonusNumberPrompt();
+        String bonusNumber = InputView.readBonusNumber();
+        return drawService.determineBonusNumber(bonusNumber, winningNumbers);
     }
 }

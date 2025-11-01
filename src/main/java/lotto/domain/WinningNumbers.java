@@ -26,6 +26,10 @@ public class WinningNumbers extends LotteryNumbers {
         return Collections.unmodifiableList(numbers);
     }
 
+    public boolean contains(int number) {
+        return numbers.contains(number);
+    }
+
     private static List<Integer> parseAndTranslateFormatErrors(String input) {
         try {
             List<String> numbersString = split(input);
