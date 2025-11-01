@@ -3,6 +3,8 @@ package lotto.domain;
 import lotto.error.*;
 import lotto.util.InputParser;
 
+import java.util.List;
+
 public class BonusNumber {
     private static final int MINIMUM = 1;
     private static final int MAXIMUM = 45;
@@ -19,14 +21,13 @@ public class BonusNumber {
         return new BonusNumber(parsedNumber, winningNumbers);
     }
 
-    public boolean isEqualTo(int number) {
-        return this.number == number;
+    public boolean hasMatchingNumber(List<Integer> lottoNumbers) {
+        return lottoNumbers.contains(number);
     }
 
     private static int parseAndTranslateFormatErrors(String input) {
         try {
-            String refinedInput = InputParser.refineInput(input);
-            return InputParser.parseToInt(refinedInput);
+            return InputParser.parseToInt(input);
         } catch (InputNullOrBlankException e) {
             throw new IllegalArgumentException(ErrorMessage.BONUS_NUMBER_NULL_OR_BLANK.getMessage());
         } catch (InputNotNumericException e) {

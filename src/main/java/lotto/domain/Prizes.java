@@ -1,8 +1,6 @@
 package lotto.domain;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,10 +14,10 @@ public class Prizes {
     }
 
     public static Prizes of(Lottos lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber) {
-        Map<Prize, Integer> prizes = initializePrizeMap();
+        Map<Prize, Integer> prizes = initializePrizes();
         for (Lotto lotto : lottos.getLottos()) {
             int winningNumbersMatchCount = lotto.countMatchingWinningNumbers(winningNumbers);
-            boolean hasMatchingBonusNumber = lotto.containsBonusNumber(bonusNumber);
+            boolean hasMatchingBonusNumber = lotto.hasMatchingBonusNumber(bonusNumber);
             Prize prize = Prize.of(winningNumbersMatchCount, hasMatchingBonusNumber);
             prizes.put(prize, prizes.get(prize) + 1);
         }
@@ -30,7 +28,7 @@ public class Prizes {
         return prizesCount.get(prize);
     }
 
-    private static Map<Prize, Integer> initializePrizeMap() {
+    private static Map<Prize, Integer> initializePrizes() {
         Map<Prize, Integer> map = new LinkedHashMap<>();
         for (Prize prize : Prize.values()) {
             map.put(prize, 0);

@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -23,7 +25,7 @@ public class WinningNumbersTest {
             WinningNumbers winningNumbers = WinningNumbers.from(input);
 
             // when & then
-            assertThat(winningNumbers.getNumbers()).containsExactly(1, 2, 3, 4, 5, 6);
+            assertThat(winningNumbers.countMatchingNumbers(List.of(1, 2, 3, 4, 5, 6))).isEqualTo(6);
         }
     }
 

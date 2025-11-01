@@ -10,6 +10,8 @@ import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -31,7 +33,7 @@ public class BonusNumberTest {
             BonusNumber bonusNumber = BonusNumber.of(input, winningNumbers);
 
             // when & then
-            assertThat(bonusNumber.isEqualTo(7)).isTrue();
+            assertThat(bonusNumber.hasMatchingNumber(List.of(7))).isTrue();
         }
     }
 

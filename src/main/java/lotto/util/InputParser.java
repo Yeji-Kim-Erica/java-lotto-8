@@ -21,8 +21,9 @@ public final class InputParser {
     }
 
     public static int parseToInt(String input) {
+        String refinedInput = refineInput(input);
         try {
-            return Integer.parseInt(input);
+            return Integer.parseInt(refinedInput);
         } catch (NumberFormatException e) {
             distinguishNumberFormatError(input);
             throw new InputNumberOverflowException();

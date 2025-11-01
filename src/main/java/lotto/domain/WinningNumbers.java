@@ -4,7 +4,6 @@ import lotto.error.*;
 import lotto.util.InputParser;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,12 +21,14 @@ public class WinningNumbers extends LotteryNumbers {
         return validateOrThrow(parsedNumbers);
     }
 
-    public List<Integer> getNumbers() {
-        return Collections.unmodifiableList(numbers);
-    }
-
     public boolean contains(int number) {
         return numbers.contains(number);
+    }
+
+    public int countMatchingNumbers(List<Integer> lottoNumbers) {
+        return (int) numbers.stream()
+                .filter(lottoNumbers::contains)
+                .count();
     }
 
     private static List<Integer> parseAndTranslateFormatErrors(String input) {
@@ -50,7 +51,6 @@ public class WinningNumbers extends LotteryNumbers {
 
     private static List<Integer> convertToIntegers(List<String> inputStrings) {
         return inputStrings.stream()
-                .map(InputParser::refineInput)
                 .map(InputParser::parseToInt)
                 .toList();
     }

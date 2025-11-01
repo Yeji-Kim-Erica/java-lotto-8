@@ -34,7 +34,13 @@ public class DrawServiceTest {
             WinningNumbers result = drawService.determineWinningNumbers(input);
 
             // then
-            assertThat(result.getNumbers()).hasSize(6);
+            assertThat(result.contains(1)).isTrue();
+            assertThat(result.contains(2)).isTrue();
+            assertThat(result.contains(3)).isTrue();
+            assertThat(result.contains(4)).isTrue();
+            assertThat(result.contains(5)).isTrue();
+            assertThat(result.contains(6)).isTrue();
+            assertThat(result.contains(7)).isFalse();
         }
 
         @DisplayName("유효한 보너스 번호 입력 시 BonusNumber 객체를 생성한다.")
@@ -48,7 +54,7 @@ public class DrawServiceTest {
             BonusNumber result = drawService.determineBonusNumber(input, winningNumbers);
 
             // then
-            assertThat(result.isEqualTo(7)).isTrue();
+            assertThat(result.hasMatchingNumber(List.of(7))).isTrue();
         }
 
         @DisplayName("로또 추첨 시 로또 당첨 결과를 담고 있는 Prizes 객체를 생성한다.")

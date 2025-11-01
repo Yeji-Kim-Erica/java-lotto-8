@@ -59,8 +59,7 @@ public class DepositAmount {
 
     private static int parseAndTranslateFormatErrors(String input) {
         try {
-            String refinedInput = InputParser.refineInput(input);
-            return InputParser.parseToInt(refinedInput);
+            return InputParser.parseToInt(input);
         } catch (InputNullOrBlankException e) {
             throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_NULL_OR_BLANK.getMessage());
         } catch (InputNotNumericException e) {

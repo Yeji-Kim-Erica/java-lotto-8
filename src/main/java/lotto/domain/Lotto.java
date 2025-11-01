@@ -16,18 +16,11 @@ public class Lotto extends LotteryNumbers {
     }
 
     public int countMatchingWinningNumbers(WinningNumbers winningNumbers) {
-        return (int) numbers.stream()
-                .filter(winningNumbers::contains)
-                .count();
+        return winningNumbers.countMatchingNumbers(numbers);
     }
 
-    public boolean containsBonusNumber(BonusNumber bonusNumber) {
-        for (int number : numbers) {
-            if (bonusNumber.isEqualTo(number)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean hasMatchingBonusNumber(BonusNumber bonusNumber) {
+        return bonusNumber.hasMatchingNumber(numbers);
     }
 
     private static List<Integer> copyAndSort(List<Integer> numbers) {
