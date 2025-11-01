@@ -18,18 +18,18 @@ public class WinningNumbers extends LotteryNumbers {
     }
 
     public static WinningNumbers from(String winningNumbers) {
-        List<Integer> parsedNumbers = parseIntegers(winningNumbers);
-        return validate(parsedNumbers);
+        List<Integer> parsedNumbers = parseAndTranslateFormatErrors(winningNumbers);
+        return validateOrThrow(parsedNumbers);
     }
 
     public List<Integer> getNumbers() {
         return Collections.unmodifiableList(numbers);
     }
 
-    private static List<Integer> parseIntegers(String input) {
+    private static List<Integer> parseAndTranslateFormatErrors(String input) {
         try {
             List<String> numbersString = split(input);
-            return convertToInt(numbersString);
+            return convertToIntegers(numbersString);
         } catch (InputNullOrBlankException e) {
             throw new IllegalArgumentException(ErrorMessage.WINNING_NUMBERS_NULL_OR_BLANK.getMessage());
         } catch (InputNotNumericException e) {
@@ -44,14 +44,14 @@ public class WinningNumbers extends LotteryNumbers {
         return Arrays.stream(refinedInput.split(DELIMITER)).toList();
     }
 
-    private static List<Integer> convertToInt(List<String> inputStrings) {
+    private static List<Integer> convertToIntegers(List<String> inputStrings) {
         return inputStrings.stream()
                 .map(InputParser::refineInput)
                 .map(InputParser::parseToInt)
                 .toList();
     }
 
-    private static WinningNumbers validate(List<Integer> winningNumbers) {
+    private static WinningNumbers validateOrThrow(List<Integer> winningNumbers) {
         try {
             return new WinningNumbers(winningNumbers);
         } catch (InvalidLottoSizeException e) {

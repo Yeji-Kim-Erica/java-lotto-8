@@ -16,13 +16,13 @@ public class DepositAmount {
     private final int amount;
 
     private DepositAmount(int amount) {
-        validateDepositRule(amount);
+        validateDepositAmountRule(amount);
         this.amount = amount;
 
     }
 
     public static DepositAmount from(String depositAmount) {
-        int parsedAmount = parse(depositAmount);
+        int parsedAmount = parseAndTranslateFormatErrors(depositAmount);
         return new DepositAmount(parsedAmount);
     }
 
@@ -30,24 +30,34 @@ public class DepositAmount {
         return amount / LOTTO_PRICE;
     }
 
-    private void validateDepositRule(int amount) {
+    private void validateDepositAmountRule(int amount) {
+        validateDepositExceedsMinimum(amount);
+        validateDepositUnderMaximum(amount);
+        validateDepositDivisibleByLottoPrice(amount);
+    }
+
+    private void validateDepositExceedsMinimum(int amount) {
         boolean isLessThanMinimum = amount < LOTTO_PRICE;
         if (isLessThanMinimum) {
             throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_LESS_THAN_MINIMUM.getMessage());
         }
+    }
 
+    private void validateDepositUnderMaximum(int amount) {
         boolean isOverMaximum = amount > MAXIMUM_AMOUNT;
         if (isOverMaximum) {
             throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_OVER_MAXIMUM.getMessage());
         }
+    }
 
+    private void validateDepositDivisibleByLottoPrice(int amount) {
         boolean isNotDivisibleByLottoPrice = (amount % LOTTO_PRICE != 0);
         if (isNotDivisibleByLottoPrice) {
             throw new IllegalArgumentException(ErrorMessage.DEPOSIT_AMOUNT_NOT_DIVISIBLE_BY_LOTTO_PRICE.getMessage());
         }
     }
 
-    private static int parse(String input) {
+    private static int parseAndTranslateFormatErrors(String input) {
         try {
             String refinedInput = InputParser.refineInput(input);
             return InputParser.parseToInt(refinedInput);

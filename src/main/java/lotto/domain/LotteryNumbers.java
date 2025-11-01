@@ -18,31 +18,41 @@ public abstract class LotteryNumbers {
     protected final List<Integer> numbers;
 
     protected LotteryNumbers(List<Integer> numbers) {
-        validateLotteryNumberRule(numbers);
+        validateLotteryNumbersRule(numbers);
         this.numbers = numbers;
     }
 
-    private void validateLotteryNumberRule(List<Integer> numbers) {
+    public static void validateLottoNumberRange(int number) {
+        boolean isOutOfRange = (number < NUMBER_START_RANGE) || (number > NUMBER_END_RANGE);
+        if (isOutOfRange) {
+            throw new LottoNumberOutOfRangeException(ErrorMessage.LOTTO_NUMBER_OUT_OF_RANGE.getMessage());
+        }
+    }
+
+    private void validateLotteryNumbersRule(List<Integer> numbers) {
+        validateSizeOfLottoGroup(numbers);
+        validateLotteryNumbers(numbers);
+    }
+
+    private void validateSizeOfLottoGroup(List<Integer> numbers) {
         boolean isInconsistentWithValidSize = (numbers.size() != VALID_SIZE);
         if (isInconsistentWithValidSize) {
             throw new InvalidLottoSizeException(ErrorMessage.LOTTO_SIZE_INVALID.getMessage());
         }
-
-        validateLotteryNumbers(numbers);
     }
 
     private void validateLotteryNumbers(List<Integer> numbers) {
         Set<Integer> uniqueNumbers = new HashSet<>();
         for (int number : numbers) {
-            boolean isOutOfRange = (number < NUMBER_START_RANGE) || (number > NUMBER_END_RANGE);
-            if (isOutOfRange) {
-                throw new LottoNumberOutOfRangeException(ErrorMessage.LOTTO_NUMBER_OUT_OF_RANGE.getMessage());
-            }
+            validateLottoNumberRange(number);
+            validateDuplication(number, uniqueNumbers);
+        }
+    }
 
-            boolean hasDuplicateNumber = !uniqueNumbers.add(number);
-            if (hasDuplicateNumber) {
-                throw new DuplicateLottoNumberException(ErrorMessage.LOTTO_NUMBER_DUPLICATED.getMessage());
-            }
+    private void validateDuplication(int number, Set<Integer> uniqueNumbers) {
+        boolean hasDuplicateNumber = !uniqueNumbers.add(number);
+        if (hasDuplicateNumber) {
+            throw new DuplicateLottoNumberException(ErrorMessage.LOTTO_NUMBER_DUPLICATED.getMessage());
         }
     }
 }
