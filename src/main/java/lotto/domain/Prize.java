@@ -7,24 +7,24 @@ import lotto.error.ErrorMessage;
  * 로또 당첨 결과를 정의하는 클래스
  */
 public enum Prize {
-    FIRST_PRIZE(6, false, 2000000000),
-    SECOND_PRIZE(5, true, 30000000),
-    THIRD_PRIZE(5, false, 1500000),
-    FOURTH_PRIZE(4, false, 50000),
+    NONE(0, false, 0),
     FIFTH_PRIZE(3, false, 5000),
-    NONE(0, false, 0);
+    FOURTH_PRIZE(4, false, 50000),
+    THIRD_PRIZE(5, false, 1500000),
+    SECOND_PRIZE(5, true, 30000000),
+    FIRST_PRIZE(6, false, 2000000000);
 
     private static final int MINIMUM_MATCH_COUNT = 0;
     private static final int MAXIMUM_MATCH_COUNT = 6;
 
     private final int winningNumbersMatchCount;
     private final boolean hasMatchingBonusNumber;
-    private final int winningMoney;
+    private final int winningsAmount;
 
-    Prize(int winningNumbersMatchCount, boolean hasMatchingBonusNumber, int winningMoney) {
+    Prize(int winningNumbersMatchCount, boolean hasMatchingBonusNumber, int winningsAmount) {
         this.winningNumbersMatchCount = winningNumbersMatchCount;
         this.hasMatchingBonusNumber = hasMatchingBonusNumber;
-        this.winningMoney = winningMoney;
+        this.winningsAmount = winningsAmount;
     }
 
     public static Prize of(int winningNumbersMatchCount, boolean hasMatchingBonusNumber) {
@@ -37,6 +37,14 @@ public enum Prize {
 
     public int getWinningNumbersMatchCount() {
         return winningNumbersMatchCount;
+    }
+
+    public boolean isMatchingBonusNumber() {
+        return hasMatchingBonusNumber;
+    }
+
+    public int getWinningsAmount() {
+        return winningsAmount;
     }
 
     private static void validateRange(int winningNumbersMatchCount) {

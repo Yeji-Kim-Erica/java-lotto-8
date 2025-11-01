@@ -1,7 +1,10 @@
 package lotto.domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * 로또 당첨 결과 목록을 관리하는 일급 컬렉션 클래스
@@ -22,6 +25,10 @@ public class Prizes {
             prizes.put(prize, prizes.get(prize) + 1);
         }
         return new Prizes(prizes);
+    }
+
+    public Set<Entry<Prize, Integer>> getPrizesCountEntries() {
+        return Collections.unmodifiableSet(prizesCount.entrySet());
     }
 
     public int countPrizes(Prize prize) {

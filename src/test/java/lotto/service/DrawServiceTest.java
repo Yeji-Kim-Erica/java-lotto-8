@@ -34,13 +34,7 @@ public class DrawServiceTest {
             WinningNumbers result = drawService.determineWinningNumbers(input);
 
             // then
-            assertThat(result.contains(1)).isTrue();
-            assertThat(result.contains(2)).isTrue();
-            assertThat(result.contains(3)).isTrue();
-            assertThat(result.contains(4)).isTrue();
-            assertThat(result.contains(5)).isTrue();
-            assertThat(result.contains(6)).isTrue();
-            assertThat(result.contains(7)).isFalse();
+            assertThat(result.countMatchingNumbers(List.of(1,2,3,4,5,6))).isEqualTo(6);
         }
 
         @DisplayName("유효한 보너스 번호 입력 시 BonusNumber 객체를 생성한다.")

@@ -23,7 +23,7 @@ public class LottoController {
         Lottos lottos = buyLottos(depositAmount);
         WinningNumbers winningNumbers = drawWinningNumbers();
         BonusNumber bonusNumber = drawBonusNumber(winningNumbers);
-        Prizes prizes = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
+        Prizes prizes = drawPrize(lottos, winningNumbers, bonusNumber);
     }
 
     private DepositAmount makeDeposit() {
@@ -79,5 +79,11 @@ public class LottoController {
         OutputView.printBonusNumberPrompt();
         String bonusNumber = InputView.readBonusNumber();
         return drawService.determineBonusNumber(bonusNumber, winningNumbers);
+    }
+
+    private Prizes drawPrize(Lottos lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber) {
+        Prizes prizes = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
+        OutputView.printWinningResults(prizes);
+        return prizes;
     }
 }

@@ -2,6 +2,12 @@ package lotto.view;
 
 import lotto.domain.Lotto;
 import lotto.domain.Lottos;
+import lotto.domain.Prize;
+import lotto.domain.Prizes;
+
+import java.text.DecimalFormat;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * 프로그램의 모든 출력을 담당하는 클래스
@@ -11,6 +17,10 @@ public class OutputView {
     private static final String LOTTO_QUANTITY_ISSUED = "%d개를 구매했습니다.";
     private static final String WINNING_NUMBER_INPUT_PROMPT = "당첨 번호를 입력해 주세요.";
     private static final String BONUS_NUMBER_INPUT_PROMPT = "보너스 번호를 입력해 주세요.";
+    private static final String WINNING_RESULTS_INITIAL_LINE = "당첨 통계\n--";
+    private static final String WINNING_RESULT_FORMAT = "%d개 일치%s (%s원) - %d개";
+    private static final DecimalFormat PRIZE_MONEY_DECIMAL_FORMAT = new DecimalFormat("###,###");
+    private static final String WINNING_RESULT_BONUS_NUMBER = ", 보너스 볼 일치";
 
     private OutputView() {}
 
@@ -43,5 +53,28 @@ public class OutputView {
 
     public static void printBonusNumberPrompt() {
         System.out.println(BONUS_NUMBER_INPUT_PROMPT);
+    }
+
+    public static void printWinningResults(Prizes prizes) {
+        System.out.println();
+        System.out.println(WINNING_RESULTS_INITIAL_LINE);
+        for (Entry<Prize, Integer> entry : prizes.getPrizesCountEntries()) {
+            Prize prize = entry.getKey();
+            int count = entry.getValue();
+            if (prize != Prize.NONE) {
+                printWinningResult(prize, count);
+            }
+        }
+    }
+
+    private static void printWinningResult(Prize prize, int count) {
+        int matchCount = prize.getWinningNumbersMatchCount();
+        String bonusMatch = "";
+        if (prize.isMatchingBonusNumber()) {
+            bonusMatch = WINNING_RESULT_BONUS_NUMBER;
+        }
+        String prizeMoney = PRIZE_MONEY_DECIMAL_FORMAT.format(prize.getWinningsAmount());
+        System.out.printf(WINNING_RESULT_FORMAT, matchCount, bonusMatch, prizeMoney, count);
+        System.out.println();
     }
 }
