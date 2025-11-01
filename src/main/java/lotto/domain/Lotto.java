@@ -1,7 +1,5 @@
 package lotto.domain;
 
-import lotto.error.ErrorMessage;
-
 import java.util.*;
 
 /**
@@ -9,7 +7,7 @@ import java.util.*;
  */
 public class Lotto extends LotteryNumbers {
     public Lotto(List<Integer> numbers) {
-        super(numbers);
+        super(copyAndSort(numbers));
     }
 
     @Override
@@ -21,5 +19,11 @@ public class Lotto extends LotteryNumbers {
         return (int) numbers.stream()
                 .filter(winningNumbers::contains)
                 .count();
+    }
+
+    private static List<Integer> copyAndSort(List<Integer> numbers) {
+        List<Integer> copiedNumbers = new ArrayList<>(numbers);
+        Collections.sort(copiedNumbers);
+        return copiedNumbers;
     }
 }

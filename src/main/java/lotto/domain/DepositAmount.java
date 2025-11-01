@@ -26,10 +26,6 @@ public class DepositAmount {
         return new DepositAmount(parsedAmount);
     }
 
-    /**
-     * 현재 입금액으로 구매 가능한 로또의 개수를 반환합니다.
-     * @return 구매 가능한 로또 개수
-     */
     public int getNumberOfPurchasableLotto() {
         return amount / LOTTO_PRICE;
     }

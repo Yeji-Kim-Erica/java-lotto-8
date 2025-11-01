@@ -19,9 +19,7 @@ public abstract class LotteryNumbers {
 
     protected LotteryNumbers(List<Integer> numbers) {
         validateLotteryNumberRule(numbers);
-        List<Integer> sortedNumbers = new ArrayList<>(numbers);
-        Collections.sort(sortedNumbers);
-        this.numbers = sortedNumbers;
+        this.numbers = numbers;
     }
 
     private void validateLotteryNumberRule(List<Integer> numbers) {
