@@ -66,12 +66,11 @@ public class DrawServiceTest {
             BonusNumber bonusNumber = BonusNumber.of("7", winningNumbers);
 
             // when
-            Prizes result = Prizes.of(lottos, winningNumbers, bonusNumber);
+            Prizes result = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
 
             // then
             assertThat(result.countPrizes(Prize.FIRST_PRIZE)).isEqualTo(3);
         }
-
     }
 
     @Nested
