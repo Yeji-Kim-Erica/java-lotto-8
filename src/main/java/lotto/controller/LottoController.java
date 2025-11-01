@@ -1,9 +1,6 @@
 package lotto.controller;
 
-import lotto.domain.BonusNumber;
-import lotto.domain.DepositAmount;
-import lotto.domain.Lottos;
-import lotto.domain.WinningNumbers;
+import lotto.domain.*;
 import lotto.service.DrawService;
 import lotto.service.PurchaseService;
 import lotto.view.InputView;
@@ -26,6 +23,7 @@ public class LottoController {
         Lottos lottos = buyLottos(depositAmount);
         WinningNumbers winningNumbers = drawWinningNumbers();
         BonusNumber bonusNumber = drawBonusNumber(winningNumbers);
+        Prizes prizes = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
     }
 
     private DepositAmount makeDeposit() {

@@ -27,7 +27,10 @@ public enum ErrorMessage {
     BONUS_NUMBER_NULL_OR_BLANK("보너스 번호는 공백이거나 비어 있을 수 없습니다."),
     BONUS_NUMBER_NOT_NUMERIC("보너스 번호는 숫자여야 합니다."),
     BONUS_NUMBER_OUT_OF_RANGE("보너스 번호는 1부터 45 사이의 숫자여야 합니다."),
-    BONUS_NUMBER_DUPLICATED_WITH_WINNING_NUMBERS("보너스 번호와 당첨 번호는 중복될 수 없습니다.");
+    BONUS_NUMBER_DUPLICATED_WITH_WINNING_NUMBERS("보너스 번호와 당첨 번호는 중복될 수 없습니다."),
+
+    // Prize Error
+    PRIZE_MATCH_COUNT_OUT_OF_RANGE("유효한 매칭 개수가 아닙니다.");
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 

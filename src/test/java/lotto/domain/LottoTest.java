@@ -31,10 +31,10 @@ class LottoTest {
         void should_ReturnNumberOfMatchCount() {
             // given
             Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-            List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
+            WinningNumbers winningNumbers = WinningNumbers.from("1,2,3,4,5,6");
 
             // when & then
-            assertThat(lotto.countMatchingNumbers(winningNumbers)).isEqualTo(6);
+            assertThat(lotto.countMatchingWinningNumbers(winningNumbers)).isEqualTo(6);
         }
     }
 

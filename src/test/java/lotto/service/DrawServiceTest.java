@@ -1,13 +1,15 @@
 package lotto.service;
 
-import lotto.domain.BonusNumber;
-import lotto.domain.WinningNumbers;
+import lotto.domain.*;
+import lotto.util.LottoNumberGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,8 +24,8 @@ public class DrawServiceTest {
 
     @Nested
     class SuccessTest {
-        @Test
         @DisplayName("유효한 당첨 번호 입력 시 WinningNumbers 객체를 생성한다.")
+        @Test
         void should_CreateWinningNumbers_ForValidInput() {
             // given
             String input = "1,2,3,4,5,6";
@@ -35,8 +37,8 @@ public class DrawServiceTest {
             assertThat(result.getNumbers()).hasSize(6);
         }
 
-        @Test
         @DisplayName("유효한 보너스 번호 입력 시 BonusNumber 객체를 생성한다.")
+        @Test
         void should_CreateBonusNumber_ForValidInput() {
             // given
             String input = "7";
@@ -48,6 +50,28 @@ public class DrawServiceTest {
             // then
             assertThat(result.isEqualTo(7)).isTrue();
         }
+
+        @DisplayName("로또 추첨 시 로또 당첨 결과를 담고 있는 Prizes 객체를 생성한다.")
+        @Test
+        void should_CreatePrizes() {
+            // given
+            LottoNumberGenerator lottoNumberGenerator = new LottoNumberGenerator() {
+                @Override
+                public List<Integer> generateUniqueNumbersInRange() {
+                    return List.of(1,2,3,4,5,6);
+                }
+            };
+            Lottos lottos = Lottos.issue(3, lottoNumberGenerator);
+            WinningNumbers winningNumbers = WinningNumbers.from("1,2,3,4,5,6");
+            BonusNumber bonusNumber = BonusNumber.of("7", winningNumbers);
+
+            // when
+            Prizes result = Prizes.of(lottos, winningNumbers, bonusNumber);
+
+            // then
+            assertThat(result.countPrizes(Prize.FIRST_PRIZE)).isEqualTo(3);
+        }
+
     }
 
     @Nested

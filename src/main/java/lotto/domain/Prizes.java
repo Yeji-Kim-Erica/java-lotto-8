@@ -1,0 +1,40 @@
+package lotto.domain;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 로또 당첨 결과 목록을 관리하는 일급 컬렉션 클래스
+ */
+public class Prizes {
+    private final Map<Prize, Integer> prizesCount;
+
+    private Prizes(Map<Prize, Integer> prizesCount) {
+        this.prizesCount = prizesCount;
+    }
+
+    public static Prizes of(Lottos lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber) {
+        Map<Prize, Integer> prizes = initializePrizeMap();
+        for (Lotto lotto : lottos.getLottos()) {
+            int winningNumbersMatchCount = lotto.countMatchingWinningNumbers(winningNumbers);
+            boolean hasMatchingBonusNumber = lotto.containsBonusNumber(bonusNumber);
+            Prize prize = Prize.of(winningNumbersMatchCount, hasMatchingBonusNumber);
+            prizes.put(prize, prizes.get(prize) + 1);
+        }
+        return new Prizes(prizes);
+    }
+
+    public int countPrizes(Prize prize) {
+        return prizesCount.get(prize);
+    }
+
+    private static Map<Prize, Integer> initializePrizeMap() {
+        Map<Prize, Integer> map = new LinkedHashMap<>();
+        for (Prize prize : Prize.values()) {
+            map.put(prize, 0);
+        }
+        return map;
+    }
+}

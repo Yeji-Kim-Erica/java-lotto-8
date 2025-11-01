@@ -1,6 +1,8 @@
 package lotto.service;
 
 import lotto.domain.BonusNumber;
+import lotto.domain.Lottos;
+import lotto.domain.Prizes;
 import lotto.domain.WinningNumbers;
 
 /**
@@ -13,5 +15,9 @@ public class DrawService {
 
     public BonusNumber determineBonusNumber(String input, WinningNumbers winningNumbers) {
         return BonusNumber.of(input, winningNumbers);
+    }
+
+    public Prizes checkLotteryResult(Lottos lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber) {
+        return Prizes.of(lottos, winningNumbers, bonusNumber);
     }
 }

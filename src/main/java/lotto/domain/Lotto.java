@@ -15,10 +15,19 @@ public class Lotto extends LotteryNumbers {
         return numbers.toString();
     }
 
-    public int countMatchingNumbers(List<Integer> winningNumbers) {
+    public int countMatchingWinningNumbers(WinningNumbers winningNumbers) {
         return (int) numbers.stream()
                 .filter(winningNumbers::contains)
                 .count();
+    }
+
+    public boolean containsBonusNumber(BonusNumber bonusNumber) {
+        for (int number : numbers) {
+            if (bonusNumber.isEqualTo(number)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static List<Integer> copyAndSort(List<Integer> numbers) {
