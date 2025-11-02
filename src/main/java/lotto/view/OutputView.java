@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 /**
  * 프로그램의 모든 출력을 담당하는 클래스
  */
-public class OutputView {
+public final class OutputView {
     private static final String DEPOSIT_INPUT_PROMPT = "구입금액을 입력해 주세요.";
     private static final String LOTTO_QUANTITY_ISSUED = "%d개를 구매했습니다.";
     private static final String WINNING_NUMBER_INPUT_PROMPT = "당첨 번호를 입력해 주세요.";
