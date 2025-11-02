@@ -7,12 +7,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
 
 public class DrawServiceTest {
     private DrawService drawService;
@@ -66,10 +70,42 @@ public class DrawServiceTest {
             BonusNumber bonusNumber = BonusNumber.of("7", winningNumbers);
 
             // when
-            Prizes result = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
+            Prizes prizes = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
+            Set<Entry<Prize, Integer>> result = prizes.getPrizesCountEntries();
 
             // then
-            assertThat(result.countPrizes(Prize.FIRST_PRIZE)).isEqualTo(3);
+            assertThat(result)
+                    .containsExactlyInAnyOrder(
+                            entry(Prize.FIRST_PRIZE, 3),
+                            entry(Prize.SECOND_PRIZE, 0),
+                            entry(Prize.THIRD_PRIZE, 0),
+                            entry(Prize.FOURTH_PRIZE, 0),
+                            entry(Prize.FIFTH_PRIZE, 0),
+                            entry(Prize.NONE, 0)
+                    );
+        }
+
+        @DisplayName("구입 금액 대비 로또 당첨 결과 수익률을 반환한다.")
+        @ParameterizedTest(name = "{0}원 입금, {3}% 수익률")
+        @CsvSource(value = {"13000:1,2,3,7,8,9:10:500", "1000:1,2,3,4,5,7:8:150000"}, delimiter = ':')
+        void should_ReturnProfitRate(String deposit, String winning, String bonus, double expected) {
+            // given
+            DepositAmount depositAmount = DepositAmount.from(deposit);
+            int purchasedAmount = depositAmount.getNumberOfPurchasableLotto();
+            LottoNumberGenerator lottoNumberGenerator = new LottoNumberGenerator() {
+                @Override
+                public List<Integer> generateUniqueNumbersInRange() {
+                    return List.of(1,2,3,4,5,6);
+                }
+            };
+            Lottos lottos = Lottos.issue(purchasedAmount, lottoNumberGenerator);
+            WinningNumbers winningNumbers = WinningNumbers.from(winning);
+            BonusNumber bonusNumber = BonusNumber.of(bonus, winningNumbers);
+            Prizes prizes = Prizes.of(lottos, winningNumbers, bonusNumber);
+
+            // when & then
+            assertThat(drawService.calculateProfitRate(depositAmount, prizes))
+                    .isEqualTo(expected);
         }
     }
 

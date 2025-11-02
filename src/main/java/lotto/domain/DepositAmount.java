@@ -30,6 +30,10 @@ public class DepositAmount {
         return amount / LOTTO_PRICE;
     }
 
+    public double divideProfitByExpense(long totalWinningAmount) {
+        return (double) totalWinningAmount / amount;
+    }
+
     private void validateDepositAmountRule(int amount) {
         validateDepositExceedsMinimum(amount);
         validateDepositUnderMaximum(amount);

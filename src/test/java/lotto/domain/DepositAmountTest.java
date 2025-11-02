@@ -27,6 +27,23 @@ public class DepositAmountTest {
             // then
             assertThat(numberOfPurchasableLotto).isEqualTo(expected);
         }
+
+        @DisplayName("1등 당첨 시 구입 금액 대비 수익금의 비율을 반환한다.")
+        @ParameterizedTest(name = "로또 구입금 {0}원으로 총상금 {1}원을 받았을 때 수익금 비율: {2}")
+        @CsvSource(value = {
+                "500000, 1505000, 3.01",
+                "85000, 55000, 0.6470588235294118",
+                "8000, 5000, 0.625",
+                "2147483000, 5000, 2.3283071391019162E-6",
+                "2147483000, 4294966000000000, 2000000"
+                })
+        void should_ReturnProfitRatio(String input, long totalWinningAmount, double expected) {
+            // when
+            DepositAmount depositAmount = DepositAmount.from(input);
+
+            // then
+            assertThat(depositAmount.divideProfitByExpense(totalWinningAmount)).isEqualTo(expected);
+        }
     }
 
     @Nested

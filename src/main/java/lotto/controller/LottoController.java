@@ -24,6 +24,7 @@ public class LottoController {
         WinningNumbers winningNumbers = drawWinningNumbers();
         BonusNumber bonusNumber = drawBonusNumber(winningNumbers);
         Prizes prizes = drawPrize(lottos, winningNumbers, bonusNumber);
+        analyzeProfit(depositAmount, prizes);
     }
 
     private DepositAmount makeDeposit() {
@@ -85,5 +86,10 @@ public class LottoController {
         Prizes prizes = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
         OutputView.printWinningResults(prizes);
         return prizes;
+    }
+
+    private void analyzeProfit(DepositAmount depositAmount, Prizes prizes) {
+        double profitRate = drawService.calculateProfitRate(depositAmount, prizes);
+        OutputView.printProfitRate(profitRate);
     }
 }

@@ -31,8 +31,14 @@ public class Prizes {
         return Collections.unmodifiableSet(prizesCount.entrySet());
     }
 
-    public int countPrizes(Prize prize) {
-        return prizesCount.get(prize);
+    public long calculateTotalWinningAmount() {
+        long sum = 0;
+        for (Entry<Prize, Integer> entry : prizesCount.entrySet()) {
+            Prize prize = entry.getKey();
+            int count = entry.getValue();
+            sum += (long) prize.getWinningsAmount() * count;
+        }
+        return sum;
     }
 
     private static Map<Prize, Integer> initializePrizes() {
