@@ -1,6 +1,7 @@
 package lotto.service;
 
 import lotto.domain.DepositAmount;
+import lotto.domain.Lottos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -32,6 +33,19 @@ public class PurchaseServiceTest {
 
             // then
             assertThat(result.getNumberOfPurchasableLotto()).isEqualTo(5);
+        }
+
+        @Test
+        @DisplayName("유효한 금액으로 구매 요청 시 올바른 수량의 Lottos 객체를 반환한다.")
+        void should_ReturnCorrectQuantity() {
+            // given
+            DepositAmount amount = DepositAmount.from("5000");
+
+            // when
+            Lottos result = purchaseService.purchaseLottos(amount);
+
+            // then
+            assertThat(result.size()).isEqualTo(5);
         }
     }
 
