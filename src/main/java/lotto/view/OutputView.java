@@ -68,7 +68,6 @@ public class OutputView {
     }
 
     public static void printProfitRate(double profitRate) {
-        System.out.println();
         System.out.printf(PROFIT_RATE_FORMAT, profitRate);
         System.out.println();
     }
