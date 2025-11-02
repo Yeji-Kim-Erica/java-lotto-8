@@ -20,7 +20,7 @@ public class OutputView {
     private static final String WINNING_RESULT_FORMAT = "%d개 일치%s (%s원) - %d개";
     private static final DecimalFormat PRIZE_MONEY_DECIMAL_FORMAT = new DecimalFormat("###,###");
     private static final String WINNING_RESULT_BONUS_NUMBER = ", 보너스 볼 일치";
-    private static final String PROFIT_RATE_FORMAT = "총 수익률은 %.1f%%입니다."; // %.1f를 사용해 소수점 둘째 자리에서 반올림
+    private static final String PROFIT_RATE_FORMAT = "총 수익률은 %,.1f%%입니다."; // %.1f를 사용해 소수점 둘째 자리에서 반올림
 
     private OutputView() {}
 
