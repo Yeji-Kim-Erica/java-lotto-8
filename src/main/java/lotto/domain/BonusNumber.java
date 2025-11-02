@@ -5,6 +5,9 @@ import lotto.util.InputParser;
 
 import java.util.List;
 
+/**
+ * 보너스 번호 domain 클래스
+ */
 public class BonusNumber {
     private static final int MINIMUM = 1;
     private static final int MAXIMUM = 45;

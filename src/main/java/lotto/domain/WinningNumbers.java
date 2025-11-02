@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 당첨 번호 도메인 클래스
+ * 당첨 번호 domain 클래스
  */
 public class WinningNumbers extends LotteryNumbers {
     private static final String DELIMITER = ",";

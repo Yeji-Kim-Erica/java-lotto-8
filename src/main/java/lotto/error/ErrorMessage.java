@@ -1,7 +1,7 @@
 package lotto.error;
 
 /**
- * 오류 메시지를 정의한 클래스
+ * 오류 메시지를 정의한 enum 클래스
  */
 public enum ErrorMessage {
     // DepositAmount Error

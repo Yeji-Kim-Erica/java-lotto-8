@@ -8,7 +8,7 @@ import lotto.error.LottoNumberOutOfRangeException;
 import java.util.*;
 
 /**
- * 로또 번호 조합의 공통 규칙을 정의하는 추상화 클래스
+ * 로또 번호 조합의 공통 규칙을 정의하는 abstract 클래스
  */
 public abstract class LotteryNumbers {
     private static final int VALID_SIZE = 6;

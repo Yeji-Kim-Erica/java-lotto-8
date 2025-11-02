@@ -7,7 +7,7 @@ import lotto.error.InputNumberOverflowException;
 import lotto.util.InputParser;
 
 /**
- * 구입금액 도메인 클래스
+ * 구입금액 domain 클래스
  */
 public class DepositAmount {
     private static final int LOTTO_PRICE = 1000;

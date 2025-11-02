@@ -3,7 +3,7 @@ package lotto.domain;
 import java.util.*;
 
 /**
- * 로또 도메인 클래스
+ * 로또 domain 클래스
  */
 public class Lotto extends LotteryNumbers {
     public Lotto(List<Integer> numbers) {

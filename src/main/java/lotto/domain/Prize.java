@@ -1,10 +1,9 @@
 package lotto.domain;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import lotto.error.ErrorMessage;
 
 /**
- * 로또 당첨 결과를 정의하는 클래스
+ * 로또 당첨 결과를 정의하는 enum 클래스
  */
 public enum Prize {
     NONE(0, false, 0),

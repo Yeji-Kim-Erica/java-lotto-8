@@ -8,7 +8,7 @@ import lotto.service.PurchaseService;
  * 애플리케이션의 실행에 필요한 모든 객체를 생성하고 서로 연결하는 설정 클래스
  */
 public class AppConfig {
-    private static class Holder {
+    private static class LazyHolder {
         public static final AppConfig INSTANCE = new AppConfig();
 
         public static final PurchaseService PURCHASE_SERVICE = new PurchaseService();
@@ -19,10 +19,10 @@ public class AppConfig {
     private AppConfig() {}
 
     public static AppConfig getInstance() {
-        return Holder.INSTANCE;
+        return LazyHolder.INSTANCE;
     }
 
     public LottoController lottoController() {
-        return Holder.CONTROLLER;
+        return LazyHolder.CONTROLLER;
     }
 }

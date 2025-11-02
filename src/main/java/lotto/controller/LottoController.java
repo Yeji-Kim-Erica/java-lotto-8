@@ -20,11 +20,11 @@ public class LottoController {
 
     public void run() {
         DepositAmount depositAmount = makeDeposit();
-        Lottos lottos = buyLottos(depositAmount);
+        Lottos lottos = buyLottosAndPrintIssuanceDetails(depositAmount);
         WinningNumbers winningNumbers = drawWinningNumbers();
         BonusNumber bonusNumber = drawBonusNumber(winningNumbers);
-        Prizes prizes = drawPrize(lottos, winningNumbers, bonusNumber);
-        analyzeProfit(depositAmount, prizes);
+        Prizes prizes = drawPrizesAndPrintResult(lottos, winningNumbers, bonusNumber);
+        analyzeProfitAndPrintResult(depositAmount, prizes);
     }
 
     private DepositAmount makeDeposit() {
@@ -43,7 +43,7 @@ public class LottoController {
         return purchaseService.depositMoney(depositAmount);
     }
 
-    private Lottos buyLottos(DepositAmount depositAmount) {
+    private Lottos buyLottosAndPrintIssuanceDetails(DepositAmount depositAmount) {
         Lottos lottos = purchaseService.purchaseLottos(depositAmount);
         OutputView.printLottoIssuanceDetails(lottos);
         return lottos;
@@ -82,13 +82,13 @@ public class LottoController {
         return drawService.determineBonusNumber(bonusNumber, winningNumbers);
     }
 
-    private Prizes drawPrize(Lottos lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber) {
+    private Prizes drawPrizesAndPrintResult(Lottos lottos, WinningNumbers winningNumbers, BonusNumber bonusNumber) {
         Prizes prizes = drawService.checkLotteryResult(lottos, winningNumbers, bonusNumber);
         OutputView.printWinningResults(prizes);
         return prizes;
     }
 
-    private void analyzeProfit(DepositAmount depositAmount, Prizes prizes) {
+    private void analyzeProfitAndPrintResult(DepositAmount depositAmount, Prizes prizes) {
         double profitRate = drawService.calculateProfitRate(depositAmount, prizes);
         OutputView.printProfitRate(profitRate);
     }

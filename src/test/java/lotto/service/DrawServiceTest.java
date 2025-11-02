@@ -87,8 +87,8 @@ public class DrawServiceTest {
 
         @DisplayName("구입 금액 대비 로또 당첨 결과 수익률을 반환한다.")
         @ParameterizedTest(name = "{0}원 입금, {3}% 수익률")
-        @CsvSource(value = {"13000:1,2,3,7,8,9:10:500", "1000:1,2,3,4,5,7:8:150000"}, delimiter = ':')
-        void should_ReturnProfitRate(String deposit, String winning, String bonus, double expected) {
+        @CsvSource(value = {"13000:1,2,3,7,8,9:10:500.0", "1000:1,2,3,4,5,7:8:150000.0"}, delimiter = ':')
+        void should_ReturnProfitRate(String deposit, String winningNum, String bonusNum, double expected) {
             // given
             DepositAmount depositAmount = DepositAmount.from(deposit);
             int purchasedAmount = depositAmount.getNumberOfPurchasableLotto();
@@ -99,8 +99,8 @@ public class DrawServiceTest {
                 }
             };
             Lottos lottos = Lottos.issue(purchasedAmount, lottoNumberGenerator);
-            WinningNumbers winningNumbers = WinningNumbers.from(winning);
-            BonusNumber bonusNumber = BonusNumber.of(bonus, winningNumbers);
+            WinningNumbers winningNumbers = WinningNumbers.from(winningNum);
+            BonusNumber bonusNumber = BonusNumber.of(bonusNum, winningNumbers);
             Prizes prizes = Prizes.of(lottos, winningNumbers, bonusNumber);
 
             // when & then

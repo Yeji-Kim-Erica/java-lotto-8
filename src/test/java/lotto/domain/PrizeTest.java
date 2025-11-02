@@ -25,7 +25,7 @@ public class PrizeTest {
                 "1, true, NONE",
                 "0, true, NONE"
         })
-        void should_ReturnsCorrectPrize(int winningNumbersMatchCount, boolean hasMatchingBonusNumber, Prize expected) {
+        void should_ReturnCorrectPrize(int winningNumbersMatchCount, boolean hasMatchingBonusNumber, Prize expected) {
             // when
             Prize result = Prize.of(winningNumbersMatchCount, hasMatchingBonusNumber);
 
